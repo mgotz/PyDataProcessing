@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name='mg_dataprocessing',
-    version='0.1.0',
+    version='1.0.0',
     
     packages=find_packages(), #automagically include all subfolders as packages
     
