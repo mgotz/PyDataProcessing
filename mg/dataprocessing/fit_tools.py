@@ -4,7 +4,7 @@ Created on Wed Aug 12 11:21:20 2015
 
 @author: gotzm
 """
-
+from __future__ import print_function
 
 
 import logging
@@ -193,3 +193,28 @@ def fit_2D_gauss(data,symmetric = False,useOffset=True, useRotation=True):
             cov = np.inf
             raise FitError("none covariance matrix after {:d} iterations".format(info["nfev"]))
         return popt, cov
+    
+if __name__ == '__main__':
+    xDim = 1000 
+    yDim = 1000
+        
+    x,y = np.meshgrid(np.linspace(0,xDim,yDim),np.linspace(0,xDim,yDim))
+    z = (5.0*np.exp(-np.divide(np.square(x-500),2*200**2)-np.divide(np.square(y-300),2*100**2))
+        +np.random.rand(xDim,yDim)*0.1)
+    
+    popt, cov = fit_2D_gauss(z, useRotation=False)
+    
+    print(*popt)
+    
+    fitRes = gauss2D(*popt)
+    
+    import matplotlib.pyplot as plt
+    fig1, ax1 = plt.subplots()
+    
+    ax1.imshow(z)
+    ax1.contour(fitRes(y,x))
+    
+    plt.show()
+    
+    
+    
